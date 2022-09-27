@@ -1,0 +1,52 @@
+# GEMINI
+gemini:
+  distance: wasserstein
+  ovo: false
+
+result_path: ./results/mnist/mlp/wasserstein_false
+data_path: /home/lohl/data
+
+# Dataset
+dataset: data/custom_datasets/mnist28_flat.py
+dataset_kwargs:
+similarity_fct: sqeuclidean
+similarity_kwargs:
+
+use_cuda: true
+
+# Regularisation
+regularisations:
+  entropy_weight: 0.0
+  vat_weight: 0
+  vat_kwargs:
+    xi: 10.0
+    eps: 1.0
+  reconstruction_weight: 0.0
+
+# Model
+model:
+  encoder: models/custom_models/encoder_linear.py
+  encoder_kwargs:
+    input_shape: 784
+    output_shape: 1200
+    activation: relu
+  clustering_head: models/custom_models/clustering_head_linear.py
+  clustering_head_kwargs:
+    input_shape: 1200
+    num_clusters: 10
+
+  
+
+# Training
+epochs: 500
+optimiser: adam
+learning_rate: 0.001
+batch_size: 250
+num_workers: 16
+
+# Evaluation
+metrics:
+  ari: on
+  accuracy: on
+  purity: on
+  used_clusters: on
