@@ -1,0 +1,51 @@
+# GEMINI
+gemini:
+  distance: mmd
+  ovo: true
+
+result_path: ./results/cifar10
+data_path: /home/lohl/data
+
+# Dataset
+dataset: data/custom_datasets/cifar10.py
+dataset_kwargs:
+similarity_fct: linear
+similarity_kwargs:
+
+use_cuda: true
+
+# Regularisation
+regularisations:
+  entropy_weight: 0.0
+  vat_weight: 0.0
+  vat_kwargs:
+    xi: 10.0
+    eps: 0.1
+  reconstruction_weight: 0.0
+
+# Model
+model:
+  encoder: models/custom_models/encoder_lenet5.py
+  encoder_kwargs:
+    in_channels: 3
+    out_features: 250
+  clustering_head: models/custom_models/clustering_head_linear.py
+  clustering_head_kwargs:
+    num_clusters: 10
+    input_shape: 250
+
+  
+
+# Training
+epochs: 200
+optimiser: adam
+learning_rate: 0.001
+batch_size: 500
+num_workers: 16
+
+# Evaluation
+metrics:
+  ari: on
+  accuracy: on
+  purity: on
+  used_clusters: on

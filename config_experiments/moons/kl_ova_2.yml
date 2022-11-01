@@ -1,0 +1,51 @@
+# GEMINI
+gemini:
+  distance: kl
+  ovo: false
+
+result_path: ./results/moon_example
+data_path: /home/lohl/data
+
+# Dataset
+dataset: data/custom_datasets/moons.py
+dataset_kwargs:
+similarity_fct: 
+similarity_kwargs:
+
+use_cuda: true
+
+# Regularisation
+regularisations:
+  entropy_weight: 0.0
+  vat_weight: 0.0
+  vat_kwargs:
+    xi: 10.0
+    eps: 0.1
+  reconstruction_weight: 0.0
+
+# Model
+model:
+  encoder: models/custom_models/encoder_linear.py
+  encoder_kwargs:
+    input_shape: 2
+    output_shape: 10
+  clustering_head: models/custom_models/clustering_head_linear.py
+  clustering_head_kwargs:
+    input_shape: 10
+    num_clusters: 2
+
+  
+
+# Training
+epochs: 200
+optimiser: adam
+learning_rate: 0.01
+batch_size: 100
+num_workers: 16
+
+# Evaluation
+metrics:
+  ari: on
+  accuracy: on
+  purity: on
+  used_clusters: on

@@ -1,0 +1,58 @@
+# GEMINI
+gemini:
+  distance: tv
+  ovo: false
+
+result_path: ./results/gaussian_student_mixture/tv_false
+data_path: /home/lohl/data
+
+# Dataset
+dataset: data/custom_datasets/gaussian_student_mixture.py
+dataset_kwargs:
+  N: 5000
+  df: 1
+  alpha: 5
+similarity_fct:
+similarity_kwargs:
+
+use_cuda: true
+
+# Regularisation
+regularisations:
+  entropy_weight: 0.0
+  vat_weight: 0.0
+  vat_kwargs:
+    xi: 10.0
+    eps: 1.0
+  reconstruction_weight: 0.0
+
+# Model
+model:
+  encoder: models/custom_models/encoder_mlp.py
+  encoder_kwargs:
+    input_shape: 2
+    hidden_dim: 20
+    output_shape: 20
+    activation: tanh
+  clustering_head: models/custom_models/clustering_head_linear.py
+  clustering_head_kwargs:
+    input_shape: 20
+    num_clusters: 4
+
+  
+
+# Training
+epochs: 100
+optimiser: adam
+learning_rate: 0.001
+batch_size: 100
+num_workers: 16
+
+
+
+# Evaluation
+metrics:
+  ari: on
+  accuracy: on
+  purity: on
+  used_clusters: on
